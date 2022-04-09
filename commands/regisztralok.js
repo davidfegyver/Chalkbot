@@ -6,6 +6,7 @@ const {
   onlyDMEmbed,
   alreadyRegisteredEmbed,
   badDataEmbed,
+  badRegisterUsageEmbed
 } = require("../utils/embeds");
 
 exports.run = async (client, message, args) => {
