@@ -1,45 +1,36 @@
-const fetch = (...args) => import('node-fetch').then(module => module.default(...args))
+const superagent = require("superagent");
 
-module.exports = async (school, username, password)=>{
-    const nonceStr = await fetch("https://idp.e-kreta.hu/nonce").then(r=>r.text())
+module.exports = async (institute_code, userName, password) => {
+  const nonce = await superagent
+    .get("https://idp.e-kreta.hu/nonce")
+    .then((res) => res.text);
 
-    const nonceEncoder = getNonce(nonceStr, username, school)
-    const resp = await fetch("https://idp.e-kreta.hu/connect/token", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/x-www-form-urlencoded",
-            ...nonceEncoder.header()
-        },
-        body: `institute_code=${school}&userName=${username}&password=${password}&grant_type=password&client_id=kreta-ellenorzo-mobile`
-    }).then(response => response.json());
-    return resp.access_token; 
-}
+  const bytes = Buffer.from(
+    userName.toLowerCase() + institute_code.toLowerCase() + nonce,
+    "utf8"
+  );
+  const digest = require("crypto")
+    .createHmac(
+      "sha512",
+      Buffer.from([53, 75, 109, 112, 109, 103, 100, 53, 102, 74])
+    )
+    .update(bytes)
+    .digest();
 
+  const resp = await superagent
+    .post("https://idp.e-kreta.hu/connect/token")
+    .set("Content-Type", "application/x-www-form-urlencoded")
+    .set("X-Authorizationpolicy-Nonce", nonce)
+    .set("X-Authorizationpolicy-Key", digest.toString("base64"))
+    .set("X-Authorizationpolicy-Version", "v1")
+    .send({
+      institute_code,
+      userName,
+      password,
+      grant_type: "password",
+      client_id: "kreta-ellenorzo-mobile",
+    })
+    .then((res) => res.body);
 
-function getNonce(nonce, username, institute_code) {
-    const nonceEncoder = new Nonce(Buffer.from([53, 75, 109, 112, 109, 103, 100, 53, 102, 74]), nonce)
-    nonceEncoder.encode(username.toLowerCase() + institute_code.toLowerCase() + nonce)
-    return nonceEncoder
-}
-class Nonce {
-    constructor(key, nonce) {
-        this.key = key;
-        this.nonce = nonce;
-        this.encoded = "";
-    }
-    encode(str) {
-        const bytes = Buffer.from(str, "utf8")
-        const digest = require("crypto").createHmac("sha512", this.key)
-            .update(bytes)
-            .digest();
-        this.encoded = digest.toString("base64");
-    }
-    header() {
-        return {
-            "X-Authorizationpolicy-Nonce": this.nonce,
-            "X-Authorizationpolicy-Key": this.encoded || "",
-            "X-Authorizationpolicy-Version": "v1",
-        }
-    }
-
-}
+    return resp.access_token
+};
