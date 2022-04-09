@@ -1,0 +1,35 @@
+{
+  "name": "chalkbot",
+  "version": "1.0.0",
+  "description": "An e-kreta client discord bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/davidfegyver/chalkbot.git"
+  },
+  "keywords": [
+    "discord",
+    "bot",
+    "study,",
+    "corona",
+    "kreta",
+    "api"
+  ],
+  "author": "David Fegyver",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/davidfegyver/chalkbot/issues"
+  },
+  "homepage": "https://github.com/davidfegyver/chalkbot",
+  "dependencies": {
+    "discord.js": "^12.3.1",
+    "mathjs": "^9.3.2",
+    "moment": "^2.29.1",
+    "superagent": "^6.1.0",
+    "table": "^6.0.3",
+    "turndown": "^7.0.0"
+  }
+}

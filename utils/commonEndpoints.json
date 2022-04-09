@@ -1,0 +1,14 @@
+{
+    "login": "https://idp.e-kreta.hu/connect/token",
+    "notes": "/ellenorzo/V3/Sajat/Feljegyzesek",
+    "events": "/ellenorzo/V3/Sajat/FaliujsagElemek",
+    "student": "/ellenorzo/V3/Sajat/TanuloAdatlap",
+    "evaluations": "/ellenorzo/V3/Sajat/Ertekelesek",
+    "absences": "/ellenorzo/V3/Sajat/Mulasztasok",
+    "groups": "/ellenorzo/V3/Sajat/OsztalyCsoportok",
+    "timetable": "/ellenorzo/V3/Sajat/OrarendElemek",
+    "exams": "/ellenorzo/V3/Sajat/BejelentettSzamonkeresek",
+    "homeworks": "/ellenorzo/V3/Sajat/HaziFeladatok",
+    "homeworkDone": "/ellenorzo/V3/Sajat/HaziFeladatok/Megoldva",
+    "capabilities": "/ellenorzo/V3/Sajat/Intezmenyek"
+}
