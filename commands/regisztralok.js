@@ -13,7 +13,7 @@ exports.run = async (client, message, args) => {
 
   const school = args[0];
   const username = args[1];
-  const password = args[2]; 
+  const password = args.slice(2).join(" ");
 
   const datas = client.json[message.author.id]
     ? client.json[message.author.id].auth
