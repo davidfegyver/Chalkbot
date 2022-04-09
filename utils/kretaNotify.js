@@ -6,13 +6,12 @@ const TurndownService = require('turndown')
 const turndownService = new TurndownService()
 const perc = 30
 module.exports = (client) => {
-    console.log("Ran KretaNotify checks")
+    client.logger.info("KrétaNotify futtatása...")
     const dbdata = client.json
     const date = new Date(Date.now() - (24 * 60 * 60 * 1000)).toISOString().split("T")[0];
 
     Object.keys(dbdata).forEach(async userID => {
         if (!dbdata[userID].kretaNotify) return
-        console.log(`checking for ${userID}`)
         let jegyek = await getApiData(`${commonEndpoints.evaluations}?datumTol=${date}`, dbdata[userID].auth)
         jegyek = jegyek.filter(item => Date.now() - Date.parse(item.KeszitesDatuma) < perc * 60 * 1000)
 
@@ -35,8 +34,9 @@ module.exports = (client) => {
         for (const hianyzas of hianyzasok) user.send(hianyzasEmbed(hianyzas))
         for (const szamonkeres of szamonkeresek) user.send(szamonkeresEmbed(szamonkeres))
         
-        console.log(`Sent ${jegyek.length+feljegyzesek.length+hazifeladatok.length+hianyzasok.length+szamonkeresek.length} notification`)
+        client.logger.info(`Összesen ${jegyek.length+feljegyzesek.length+hazifeladatok.length+hianyzasok.length+szamonkeresek.length} értesítő kiküldve ${userID}-nek. `)
     })
+    client.logger.info("KrétaNotify befejezve.")
 }
 
 

@@ -1,4 +1,6 @@
 node_modules/
-/package-lock.json
-/loginDatas.json
-/settings.json
+package-lock.json
+loginDatas.json
+settings.json
+chalkbot.log 
+error.log

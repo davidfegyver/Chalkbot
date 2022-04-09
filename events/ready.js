@@ -1,7 +1,7 @@
 const kretaNotify = require("../utils/kretaNotify");
 const { prefix } = require("../settings.json");
 exports.run = async (client) => {
-  client.log(
+  client.logger.info(
     `A bot elindult, ${Object.keys(client.json).length} felhasználóval és ${
       client.guilds.cache.size
     } szerveren.`

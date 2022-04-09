@@ -27,9 +27,9 @@
   "dependencies": {
     "discord.js": "^12.3.1",
     "mathjs": "^9.3.2",
-    "moment": "^2.29.1",
     "superagent": "^6.1.0",
     "table": "^6.0.3",
-    "turndown": "^7.0.0"
+    "turndown": "^7.0.0",
+    "winston": "^3.7.2"
   }
 }
